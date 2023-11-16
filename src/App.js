@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import AddUserName from './components/AddUserName'; 
+import Quiz from './components/Quiz';
 
 function App() {
+  const [username, setUserName] = useState('');
+  const [quizStarted, setQuizStarted] = useState(false);
+
+  const startQuiz = (name) => {
+    localStorage.setItem('username', name)
+    setUserName(name);
+    setQuizStarted(true)
+  } 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {!quizStarted && <AddUserName onStartQuiz={startQuiz}/>}
+      {quizStarted && <Quiz username={username} />}
     </div>
   );
 }
